@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:whether_app/temperaturewidget.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -22,20 +23,22 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   bool ispressed = false;
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Row(
+      body: Stack(
+        children: [
+          const Padding(padding:EdgeInsets.only(top: 40,left: 10),
+            child: Row(
               children: [
-                CircleAvatar(
-                  child: Icon(CupertinoIcons.location_fill),
+                CircleAvatar(backgroundColor: Colors.black,radius: 25,
+                  child: Icon(CupertinoIcons.location_fill,color: Colors.white),
                 ),
                 SizedBox(
                   width: 10,
                 ),
-                CircleAvatar(
-                  child: Icon(CupertinoIcons.add),
+                CircleAvatar(backgroundColor: Colors.black,radius: 25,
+                  child: Icon(CupertinoIcons.plus,color: Colors.white),
                 ),
                 // GestureDetector(
                 //     onTap: () {
@@ -52,52 +55,51 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 //         controller: _animationController, repeat: false))
               ],
             ),
-            Padding(
-              padding: EdgeInsets.all(15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Berlin',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 35)),
-                  Text('Mostly sunny',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
-                ],
-              ),
+          ),
+          const Padding(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Berlin',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35)),
+                Text('Mostly sunny',
+                    style: TextStyle(fontWeight: FontWeight.w400, fontSize: 20)),
+              ],
             ),
-            Positioned(
-                bottom: 180,
-                left: 10,
-                child: Text('26°',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 150,
-                        color: Colors.black))),
-            Positioned(
-              bottom: 40,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  padding: EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                        color: CupertinoColors.black,
-                        borderRadius: BorderRadius.circular(20)),
-                    width: 373,
-                    height: 150
-                ,child:Row(children: [
-                  Column(
-                    children: [
-                      Text('data',style: TextStyle(color:Colors.white))
-                    ],
-                  )
-                ]),
-                ),
-              ),
-            )
-          ],
-        ),
+          ),
+          Positioned(
+            left: 20,
+            top: height / 1.95,
+            child: Text('26°',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 150,
+                    color: Colors.black)),
+          ),
+          Positioned(
+            left: 10,
+            right: 10,
+            bottom: height / 16,
+            child: Container(
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                  color: CupertinoColors.black,
+                  borderRadius: BorderRadius.circular(25)),
+              height: height / 5.5,
+              width: width,
+              child: const Row(
+                  children: [
+                    TempWidget(),
+                    TempWidget(),
+                    TempWidget(),
+                    TempWidget(),
+                    TempWidget(),
+                  ]),
+            ),
+          )
+        ],
       ),
     );
   }
