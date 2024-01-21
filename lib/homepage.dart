@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:whether_app/colors.dart';
 import 'package:whether_app/temperaturewidget.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -59,16 +56,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               ],
             ),
           ),
-           Padding(
-            padding: const EdgeInsets.all(20),
+          const Padding(
+            padding: EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text('Berlin',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35,color:kblack)),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35)),
                 Text('Mostly sunny',
-                    style: TextStyle(fontWeight: FontWeight.w400, fontSize: 20,color: kblack)),
+                    style: TextStyle(fontWeight: FontWeight.w400, fontSize: 20)),
               ],
             ),
           ),
@@ -79,7 +76,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 150,
-                    color:kblack)),
+                    color: Colors.black)),
           ),
           Positioned(
             left: 10,
@@ -88,7 +85,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             child: Container(
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
-                  color: kblack,
+                  color: CupertinoColors.black,
                   borderRadius: BorderRadius.circular(25)),
               height: height / 5.5,
               width: width,
