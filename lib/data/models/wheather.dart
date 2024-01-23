@@ -1,23 +1,23 @@
 // To parse this JSON data, do
 //
-//     final wheather = wheatherFromJson(jsonString);
+//     final weather = weatherFromJson(jsonString);
 
 import 'dart:convert';
 
-Wheather wheatherFromJson(String str) => Wheather.fromJson(json.decode(str));
+Weather weatherFromJson(String str) => Weather.fromJson(json.decode(str));
 
-String wheatherToJson(Wheather data) => json.encode(data.toJson());
+String weatherToJson(Weather data) => json.encode(data.toJson());
 
-class Wheather {
+class Weather {
   Location location;
   Current current;
 
-  Wheather({
+  Weather({
     required this.location,
     required this.current,
   });
 
-  factory Wheather.fromJson(Map<String, dynamic> json) => Wheather(
+  factory Weather.fromJson(Map<String, dynamic> json) => Weather(
     location: Location.fromJson(json["location"]),
     current: Current.fromJson(json["current"]),
   );
@@ -29,27 +29,27 @@ class Wheather {
 }
 
 class Current {
-  int lastUpdatedEpoch;
+  num lastUpdatedEpoch;
   String lastUpdated;
-  int tempC;
-  double tempF;
-  int isDay;
+  num tempC;
+  num tempF;
+  num isDay;
   Condition condition;
   double windMph;
-  int windKph;
-  int windDegree;
+  double windKph;
+  num windDegree;
   String windDir;
-  int pressureMb;
+  num pressureMb;
   double pressureIn;
-  double precipMm;
-  int precipIn;
-  int humidity;
-  int cloud;
+  num precipMm;
+  num precipIn;
+  num humidity;
+  num cloud;
   double feelslikeC;
   double feelslikeF;
-  int visKm;
-  int visMiles;
-  int uv;
+  num visKm;
+  num visMiles;
+  num uv;
   double gustMph;
   double gustKph;
 
@@ -83,16 +83,16 @@ class Current {
     lastUpdatedEpoch: json["last_updated_epoch"],
     lastUpdated: json["last_updated"],
     tempC: json["temp_c"],
-    tempF: json["temp_f"]?.toDouble(),
+    tempF: json["temp_f"],
     isDay: json["is_day"],
     condition: Condition.fromJson(json["condition"]),
     windMph: json["wind_mph"]?.toDouble(),
-    windKph: json["wind_kph"],
+    windKph: json["wind_kph"]?.toDouble(),
     windDegree: json["wind_degree"],
     windDir: json["wind_dir"],
     pressureMb: json["pressure_mb"],
     pressureIn: json["pressure_in"]?.toDouble(),
-    precipMm: json["precip_mm"]?.toDouble(),
+    precipMm: json["precip_mm"],
     precipIn: json["precip_in"],
     humidity: json["humidity"],
     cloud: json["cloud"],
@@ -135,7 +135,7 @@ class Current {
 class Condition {
   String text;
   String icon;
-  int code;
+  num code;
 
   Condition({
     required this.text,
@@ -163,7 +163,7 @@ class Location {
   double lat;
   double lon;
   String tzId;
-  int localtimeEpoch;
+  num localtimeEpoch;
   String localtime;
 
   Location({
