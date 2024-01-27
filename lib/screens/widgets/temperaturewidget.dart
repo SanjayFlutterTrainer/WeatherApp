@@ -12,7 +12,7 @@ class TempWidget extends StatelessWidget {
       child: Column(
         children: [
           Text(style: const TextStyle(color: Colors.white),time),
-          Lottie.network(height: 65,url
+          Lottie.network(height: 65,url,
           ),
           Text(style: const TextStyle(color: Colors.white),'$temperature°')
         ],

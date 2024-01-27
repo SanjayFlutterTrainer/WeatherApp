@@ -15,12 +15,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+  late final AnimationController _controller;
   @override
   void initState() {
     // TODO: implement initState
+    _controller = AnimationController(vsync: this);
     Provider.of<WeatherProvider>(context, listen: false).fetchData();
     super.initState();
   }
+
+  bool isPressed = false;
 
   @override
   Widget build(BuildContext context) {
@@ -30,26 +34,51 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
     return Scaffold(
         body: providerWeather.currentWeather == null
-            ? Center(child: CircularProgressIndicator())
+            ?  const Center(child: CircularProgressIndicator())
             : Container(
-                decoration: const BoxDecoration(
+                decoration:  BoxDecoration(
                     image: DecorationImage(
                         fit: BoxFit.fitHeight,
-                        image: AssetImage('assets/images/valley.png'))),
+                        image:isPressed?const AssetImage('assets/images/Japan---mt.-fuji.png.png'):const AssetImage('assets/images/Japan---mt.-fuji-night-.png'))),
                 child: Stack(
                   children: [
-                     Padding(
-                      padding: EdgeInsets.only(top: 40, left: 10),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 40, left: 10),
                       child: Row(
                         children: [
-                          const IconButtonWidget(icon: CupertinoIcons.location_fill),
+                          const IconButtonWidget(
+                              icon: CupertinoIcons.location_fill),
                           const SizedBox(
                             width: 10,
                           ),
                           const IconButtonWidget(icon: CupertinoIcons.plus),
                           Spacer(),
-                          Lottie.asset(height: 100,'Animation - 1706336576803.json'),
+                          InkWell(onTap: (){
+                            setState(() {
+                              isPressed=!isPressed;
+                            });
+                            print(isPressed);
+                           if(isPressed) {
+                             _controller.animateTo(0.125);
+                           }
+                             else{
+                            _controller.animateBack(0);
+                           }
 
+                          },
+                            child: Container(
+                              child: Lottie.asset(
+                                  height:60 ,
+                                  'assets/json/switch.json',
+                                  repeat: false,
+                                  reverse: false,
+                                controller: _controller,
+                                onLoaded: (composition){
+                                    _controller.duration=composition.duration;
+                                }
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -62,14 +91,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           Text(
                               providerWeather.currentWeather!.location.name
                                   .toString(),
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 35)),
+                              style:  TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 35,color: isPressed?kblack:kWhite)),
                           Text(
                               providerWeather
                                   .currentWeather!.current.condition.text
                                   .toString(),
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w400, fontSize: 20)),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w400, fontSize: 20,color:isPressed?kblack:kWhite)),
                         ],
                       ),
                     ),
@@ -78,10 +107,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       top: height / 1.95,
                       child: Text(
                           '${providerWeather.currentWeather?.current.tempC.round().toString()}°',
-                          style:  TextStyle(
+                          style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 150,
-                              color: kblack)),
+                              color:isPressed?kblack:kWhite)),
                     ),
                     Positioned(
                       left: 10,
@@ -90,7 +119,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       child: Container(
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                            color: kblack,
+                            color:kblack,
                             borderRadius: BorderRadius.circular(25)),
                         height: height / 5.5,
                         width: width,
