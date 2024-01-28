@@ -8,12 +8,12 @@ class TempWidget extends StatelessWidget {
   final String time;
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(style: const TextStyle(color: Colors.white),time),
-          Lottie.network(height: 65,url,
-          ),
+          Lottie.asset(height: 50,url),
           Text(style: const TextStyle(color: Colors.white),'$temperature°')
         ],
       ),
