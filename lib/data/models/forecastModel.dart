@@ -51,7 +51,7 @@ class Current {
   num cloud;
   double feelslikeC;
   double feelslikeF;
-  double visKm;
+  num visKm;
   num visMiles;
   num uv;
   double gustMph;
@@ -163,24 +163,32 @@ class Condition {
 enum Icon {
   CDN_WEATHERAPI_COM_WEATHER_64_X64_DAY_113_PNG,
   CDN_WEATHERAPI_COM_WEATHER_64_X64_DAY_143_PNG,
-  CDN_WEATHERAPI_COM_WEATHER_64_X64_NIGHT_113_PNG
+  CDN_WEATHERAPI_COM_WEATHER_64_X64_NIGHT_113_PNG,
+  CDN_WEATHERAPI_COM_WEATHER_64_X64_NIGHT_116_PNG,
+  CDN_WEATHERAPI_COM_WEATHER_64_X64_NIGHT_176_PNG
 }
 
 final iconValues = EnumValues({
   "//cdn.weatherapi.com/weather/64x64/day/113.png": Icon.CDN_WEATHERAPI_COM_WEATHER_64_X64_DAY_113_PNG,
   "//cdn.weatherapi.com/weather/64x64/day/143.png": Icon.CDN_WEATHERAPI_COM_WEATHER_64_X64_DAY_143_PNG,
-  "//cdn.weatherapi.com/weather/64x64/night/113.png": Icon.CDN_WEATHERAPI_COM_WEATHER_64_X64_NIGHT_113_PNG
+  "//cdn.weatherapi.com/weather/64x64/night/113.png": Icon.CDN_WEATHERAPI_COM_WEATHER_64_X64_NIGHT_113_PNG,
+  "//cdn.weatherapi.com/weather/64x64/night/116.png": Icon.CDN_WEATHERAPI_COM_WEATHER_64_X64_NIGHT_116_PNG,
+  "//cdn.weatherapi.com/weather/64x64/night/176.png": Icon.CDN_WEATHERAPI_COM_WEATHER_64_X64_NIGHT_176_PNG
 });
 
 enum Text {
   CLEAR,
   MIST,
+  PARTLY_CLOUDY,
+  PATCHY_RAIN_NEARBY,
   SUNNY
 }
 
 final textValues = EnumValues({
   "Clear ": Text.CLEAR,
   "Mist": Text.MIST,
+  "Partly Cloudy ": Text.PARTLY_CLOUDY,
+  "Patchy rain nearby": Text.PATCHY_RAIN_NEARBY,
   "Sunny": Text.SUNNY
 });
 
@@ -281,8 +289,8 @@ class Day {
   double maxtempF;
   double mintempC;
   num mintempF;
-  double avgtempC;
-  double avgtempF;
+  num avgtempC;
+  num avgtempF;
   double maxwindMph;
   double maxwindKph;
   num totalprecipMm;
@@ -381,7 +389,7 @@ class Hour {
   String windDir;
   num pressureMb;
   double pressureIn;
-  num precipMm;
+  double precipMm;
   num precipIn;
   num snowCm;
   num humidity;
@@ -398,7 +406,7 @@ class Hour {
   num chanceOfRain;
   num willItSnow;
   num chanceOfSnow;
-  double visKm;
+  num visKm;
   num visMiles;
   double gustMph;
   double gustKph;
@@ -444,37 +452,37 @@ class Hour {
   factory Hour.fromJson(Map<String, dynamic> json) => Hour(
     timeEpoch: json["time_epoch"],
     time: json["time"],
-    tempC: json["temp_c"],
-    tempF: json["temp_f"],
+    tempC: json["temp_c"]?.toDouble(),
+    tempF: json["temp_f"]?.toDouble(),
     isDay: json["is_day"],
     condition: Condition.fromJson(json["condition"]),
-    windMph: json["wind_mph"],
-    windKph: json["wind_kph"],
+    windMph: json["wind_mph"]?.toDouble(),
+    windKph: json["wind_kph"]?.toDouble(),
     windDegree: json["wind_degree"],
     windDir: json["wind_dir"],
     pressureMb: json["pressure_mb"],
-    pressureIn: json["pressure_in"],
-    precipMm: json["precip_mm"],
+    pressureIn: json["pressure_in"]?.toDouble(),
+    precipMm: json["precip_mm"]?.toDouble(),
     precipIn: json["precip_in"],
     snowCm: json["snow_cm"],
     humidity: json["humidity"],
     cloud: json["cloud"],
-    feelslikeC: json["feelslike_c"],
-    feelslikeF: json["feelslike_f"],
-    windchillC: json["windchill_c"],
-    windchillF: json["windchill_f"],
-    heatindexC: json["heatindex_c"],
-    heatindexF: json["heatindex_f"],
-    dewpointC: json["dewpoint_c"],
-    dewpointF: json["dewpoint_f"],
+    feelslikeC: json["feelslike_c"]?.toDouble(),
+    feelslikeF: json["feelslike_f"]?.toDouble(),
+    windchillC: json["windchill_c"]?.toDouble(),
+    windchillF: json["windchill_f"]?.toDouble(),
+    heatindexC: json["heatindex_c"]?.toDouble(),
+    heatindexF: json["heatindex_f"]?.toDouble(),
+    dewpointC: json["dewpoint_c"]?.toDouble(),
+    dewpointF: json["dewpoint_f"]?.toDouble(),
     willItRain: json["will_it_rain"],
     chanceOfRain: json["chance_of_rain"],
     willItSnow: json["will_it_snow"],
     chanceOfSnow: json["chance_of_snow"],
     visKm: json["vis_km"],
     visMiles: json["vis_miles"],
-    gustMph: json["gust_mph"],
-    gustKph: json["gust_kph"],
+    gustMph: json["gust_mph"]?.toDouble(),
+    gustKph: json["gust_kph"]?.toDouble(),
     uv: json["uv"],
   );
 
@@ -541,8 +549,8 @@ class Location {
     name: json["name"],
     region: json["region"],
     country: json["country"],
-    lat: json["lat"],
-    lon: json["lon"],
+    lat: json["lat"]?.toDouble(),
+    lon: json["lon"]?.toDouble(),
     tzId: json["tz_id"],
     localtimeEpoch: json["localtime_epoch"],
     localtime: json["localtime"],

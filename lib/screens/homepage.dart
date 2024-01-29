@@ -23,12 +23,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void initState() {
     // TODO: implement initState
     _controller = AnimationController(vsync: this);
-    _color = AnimationController(vsync: this,  duration: const Duration(milliseconds: 500));
+    _color = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
     Provider.of<WeatherProvider>(context, listen: false).fetchData();
     Provider.of<ForecastProvider>(context, listen: false).fetchData();
     _colorAnimation = ColorTween(
       begin: kWhite, // Change this to your initial color
-      end: kblack,   // Change this to your target color
+      end: kblack, // Change this to your target color
     ).animate(_color);
     super.initState();
   }
@@ -108,33 +109,33 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 providerWeather.currentWeather!.location.name
                                     .toString(),
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 35,
+                                    fontSize: 40,
+                                    fontFamily: 'BlackOpsOne',
                                     color: isPressed ? kblack : kWhite)),
                             Text(
                                 providerWeather
                                     .currentWeather!.current.condition.text
                                     .toString(),
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 20,
+                                    fontSize: 27,
+                                    fontFamily: 'RussoOne',
                                     color: isPressed ? kblack : kWhite)),
                           ],
                         ),
                       ),
                       Positioned(
                         left: 20,
-                        top: height / 1.95,
+                        top: height / 1.9,
                         child: AnimatedBuilder(
                           animation: _color,
                           builder: (BuildContext context, Widget? child) {
                             return Text(
-
                                 '${providerWeather.currentWeather?.current.tempC.round().toString()}°',
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 150,
-                                    color: _colorAnimation.value,));
+                                  fontSize: 150,
+                                  fontFamily: 'BlackOpsOne',
+                                  color: _colorAnimation.value,
+                                ));
                           },
                         ),
                       ),
@@ -150,45 +151,31 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             height: height / 5.5,
                             width: width,
                             child: ListView.builder(
-                              itemCount: 5,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
-                                return providerForecast.forecastWeather==null?Container():TempWidget(
-                                    temperature: providerForecast
+                                itemCount: 5,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  if (providerForecast.forecastWeather !=
+                                      null) {
+                                    var forecastDay = providerForecast
                                         .forecastWeather!
                                         .forecast
-                                        .forecastday[0]
-                                        .hour[index]
-                                        .tempC
-                                        .round()
-                                        .toString(),
-                                    time:providerForecast
-                                        .forecastWeather!
-                                        .forecast
-                                        .forecastday[0]
-                                        .hour[index]
-                                        .time
-                                        .split(' ')[1]=='00:00'?'Now':providerForecast
-                                        .forecastWeather!
-                                        .forecast
-                                        .forecastday[0]
-                                        .hour[index]
-                                        .time
-                                        .split(' ')[1]
-                                        .toString(),
-                                    url: providerForecast
-                                                .forecastWeather!
-                                                .forecast
-                                                .forecastday[0]
-                                                .hour[index]
-                                                .condition
-                                                .text
-                                                .name ==
-                                            'SUNNY'
-                                        ? 'assets/json/Sunny_day.json'
-                                        : 'assets/json/cloud.json');
-                              },
-                            )
+                                        .forecastday[0];
+                                    var hour = forecastDay.hour[index];
+                                    return TempWidget(
+                                        temperature:
+                                            hour.tempC.round().toString(),
+                                        time: hour.time.split(' ')[1] == '00:00'
+                                            ? 'Now'
+                                            : hour.time
+                                                .split(' ')[1]
+                                                .toString(),
+                                        url: hour.condition.text.name == 'SUNNY'
+                                            ? 'assets/json/Sunny_day.json'
+                                            : 'assets/json/cloud.json');
+                                  } else {
+                                    return Container();
+                                  }
+                                })
                             // Use the forecast data to populate TempWidget widgets
 
                             ),

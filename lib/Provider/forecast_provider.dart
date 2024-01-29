@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:whether_app/data/models/forecastModel.dart';
-import '../data/models/wheather.dart';
 
 class ForecastProvider extends ChangeNotifier {
 
@@ -15,10 +14,12 @@ class ForecastProvider extends ChangeNotifier {
       'q': 'kochi',
     };
     var urlForecast = Uri.https(baseUrl, '/v1/forecast.json', queryParameters);
+    print(urlForecast);
     try {
       final response = await http.get(urlForecast);
 
       if (response.statusCode == 200) {
+        print(response.body);
         forecastWeather = forecastFromJson(response.body);
         notifyListeners();
 
